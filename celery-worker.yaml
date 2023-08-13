@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: celery-worker
+  namespace: model
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: celery-worker
+  template:
+    metadata:
+      labels:
+        app: celery-worker
+    spec:
+      containers:
+        - name: celery-worker
+          image: celery_worker 
+          imagePullPolicy: Never
+          env:
+            - name: REDIS_URL
+              value: "redis://redis.api:6379"
+            - name: WORKER
+              value: "true"
+          envFrom:
+            - configMapRef:
+                name: globalconfig

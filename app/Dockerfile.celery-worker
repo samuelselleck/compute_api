@@ -1,0 +1,8 @@
+FROM python:3.9
+WORKDIR /app
+COPY requirements.txt /app/
+RUN pip install --no-cache-dir -r requirements.txt
+COPY celery_client.py /app/
+COPY model.py /app/
+CMD ["celery", "-A", "celery_client", "worker", "--loglevel=info", "--concurrency=1"]
+
