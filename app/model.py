@@ -1,17 +1,22 @@
 import uuid
-import time 
+import time
+
 
 class Model:
-	def __init__(self):
-		time.sleep(self.setup_time())
-		self.return_val = "world" + str(uuid.uuid4())
+    def __init__(self):
+        time.sleep(self.setup_time())
+        self.uuid = str(uuid.uuid4())
 
-	def predict(self, hello: str):
-		time.sleep(self.predict_time())
-		return {"output": self.return_val, "input": hello}
+    def predict(self, input: str):
+        time.sleep(self.predict_time())
+        output = f"""\
+		model inference on instance {self.uuid}\
+		with input {input} was successfull!
+		"""
+        return {"output": output, "input": input}
 
-	def setup_time(self):
-		return 30
+    def setup_time(self):
+        return 30
 
-	def predict_time(self):
-		return 5 
+    def predict_time(self):
+        return 5
